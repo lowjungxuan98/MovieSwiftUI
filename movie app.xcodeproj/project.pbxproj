@@ -10,7 +10,6 @@
 		544073572CC825C2004094B8 /* NavigationStack in Frameworks */ = {isa = PBXBuildFile; productRef = 544073562CC825C2004094B8 /* NavigationStack */; };
 		544073662CC83096004094B8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 544073652CC83096004094B8 /* RealmSwift */; };
 		544073672CC8324B004094B8 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 544073652CC83096004094B8 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5440736B2CC8335C004094B8 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5440736A2CC8335C004094B8 /* SDWebImageSwiftUI */; };
 		5440736E2CC833A8004094B8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5440736D2CC833A8004094B8 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5440736E2CC833A8004094B8 /* Kingfisher in Frameworks */,
-				5440736B2CC8335C004094B8 /* SDWebImageSwiftUI in Frameworks */,
 				544073662CC83096004094B8 /* RealmSwift in Frameworks */,
 				544073572CC825C2004094B8 /* NavigationStack in Frameworks */,
 			);
@@ -94,7 +92,6 @@
 			packageProductDependencies = (
 				544073562CC825C2004094B8 /* NavigationStack */,
 				544073652CC83096004094B8 /* RealmSwift */,
-				5440736A2CC8335C004094B8 /* SDWebImageSwiftUI */,
 				5440736D2CC833A8004094B8 /* Kingfisher */,
 			);
 			productName = "movie app";
@@ -128,7 +125,6 @@
 			packageReferences = (
 				544073552CC825C2004094B8 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */,
 				544073642CC83096004094B8 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				544073692CC8335C004094B8 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				5440736C2CC833A8004094B8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -381,14 +377,6 @@
 				kind = branch;
 			};
 		};
-		544073692CC8335C004094B8 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.2;
-			};
-		};
 		5440736C2CC833A8004094B8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -409,11 +397,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 544073642CC83096004094B8 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		5440736A2CC8335C004094B8 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 544073692CC8335C004094B8 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
 		};
 		5440736D2CC833A8004094B8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

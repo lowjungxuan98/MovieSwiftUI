@@ -6,54 +6,68 @@
 //
 
 import SwiftUI
+import NavigationStack
 
 struct LoginView: View {
+    @EnvironmentObject private var navigationStack: NavigationStackCompat
+
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .leading) {
+            Button(action: {
+                navigationStack.pop()
+            }) {
+                Image("back")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.blue)
+            }
+            .padding(.top)
             
-            Image("login_image")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 200)
-            
-            Text("Access more with an account")
-                .font(.system(size: 30, weight: .bold))
+            Text("Welcome back 👋")
+                .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.blue)
-                .multilineTextAlignment(.center)
-                .padding(.top, 30)
+                .multilineTextAlignment(.leading)
+                .padding(.top, 80)
                 .padding(.bottom, 8)
-                .padding(.horizontal, 40)
-
-            Text("Login to an account so you could access more features")
-                .font(.system(size: 17))
+            
+            Text("I am so happy to see you again. You can continue to login for more features.")
+                .font(.system(size: 16))
                 .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-
+                .multilineTextAlignment(.leading)
+                .padding(.bottom, 30)
+            
+            TextField("Email", text: .constant(""))
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            
+            SecureField("Password", text: .constant(""))
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            
+            
             Spacer()
             
             PrimaryButton(title: "Login", action: {
-                
+                navigationStack.push(MovieListView())
             })
-            .padding(.horizontal)
             
-            Button(action: {
-                
-            }) {
-                Text("Sign Up")
-                    .font(.system(size: 18, weight: .bold))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .foregroundColor(.blue)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.blue, lineWidth: 2)
-                    )
+            HStack {
+                Spacer()
+                Text("Don't have an account?")
+                    .foregroundColor(.gray)
+                Button(action: {
+                    // Action for sign up
+                }) {
+                    Text("Sign up")
+                        .foregroundColor(.blue)
+                }
+                Spacer()
             }
-            .padding(.horizontal)
+            .padding(.top, 10)
         }
-        .padding()
+        .padding([.horizontal, .bottom])
     }
 }
 

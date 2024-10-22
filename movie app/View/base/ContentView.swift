@@ -7,9 +7,12 @@
 
 import SwiftUI
 import CoreData
+import NavigationStack
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var navigationStack: NavigationStackCompat
+
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
@@ -17,7 +20,9 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     var body: some View {
-        MovieListView()
+        NavigationStackView {
+            OnboardingView()
+        }
 //        NavigationView {
 //            List {
 //                ForEach(items) { item in

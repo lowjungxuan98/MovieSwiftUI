@@ -27,8 +27,8 @@ struct MovieDetailView: View {
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(height: 400)
-                                    .blur(radius: 5)
+                                    .frame(height: 190)
+                                    .blur(radius: 10)
                                     .ignoresSafeArea()
                             } placeholder: {
                                 Color.gray.opacity(0.5)
@@ -44,7 +44,7 @@ struct MovieDetailView: View {
                             .fill(Color.white)
                             .ignoresSafeArea(edges: .bottom)
                             
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 10) {
                                 HStack {
                                     Spacer()
                                     Button(action: {
@@ -52,7 +52,7 @@ struct MovieDetailView: View {
                                     }) {
                                         Image("close")
                                             .resizable()
-                                            .frame(width: 48, height: 48)
+                                            .frame(width: 36, height: 36)
                                             .foregroundColor(.blue)
                                     }
                                     .padding(.top)
@@ -63,13 +63,13 @@ struct MovieDetailView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .cornerRadius(10)
-                                        .frame(width: 150, height: 225)
+                                        .frame(width: 180, height: 250)
                                 } placeholder: {
                                     ProgressView()
-                                        .frame(width: 150, height: 225)
+                                        .frame(width: 180, height: 250)
                                 }
                                 
-                                HStack {
+                                HStack(alignment: .bottom) {
                                     HStack(spacing: 2) {
                                         ForEach(0..<5) { star in
                                             Image(systemName: star < Int((movieDetail.imdbRating as NSString).doubleValue / 2) ? "star.fill" : "star")
@@ -78,13 +78,14 @@ struct MovieDetailView: View {
                                     }
                                     
                                     Text("\(movieDetail.imdbRating) / 10")
-                                        .font(.title3.bold())
+                                        .font(.system(size: 20, weight: .bold))
                                         .foregroundColor(.blue)
                                     
                                     Text("\(movieDetail.imdbVotes) Ratings")
                                         .font(.footnote)
                                         .foregroundColor(.gray)
                                 }
+                                
                                 Text("\(movieDetail.title) (\(movieDetail.year))")
                                     .font(.title.bold())
                                 
@@ -95,26 +96,42 @@ struct MovieDetailView: View {
                                 
                                 // Plot Summary
                                 Text("Plot Summary")
-                                    .font(.title2.bold())
+                                    .font(.title3.bold())
                                     .padding(.top)
                                 
                                 Text(movieDetail.plot)
-                                    .font(.body)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
                                     .padding(.bottom)
                                 
                                 Text("Other Ratings")
                                     .font(.title3.bold())
-                                    .padding(.bottom, 5)
                                 
                                 ScrollView(.horizontal) {
                                     LazyHStack(spacing: 10) {
                                         ForEach(movieDetail.ratings, id: \.source) { rating in
-                                            ratingView(name: rating.source, score: rating.value)
+                                            VStack {
+                                                Text(rating.source)
+                                                    .font(.system(size: 15))
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                    .padding([.bottom, .leading], 10)
+                                                
+                                                Text(rating.value)
+                                                    .font(.system(size: 13, weight: .bold))
+                                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                                    .foregroundColor(.blue)
+                                                    .padding( .trailing, 10)
+                                            }
+                                            .frame(width: 210, height: 60)
+                                            .background(Color.white)
+                                            .cornerRadius(10)
+                                            .shadow(color: .blue.opacity(0.2), radius: 3, y: 3)
+                                            .padding(.horizontal, 5)
                                         }
                                     }
                                 }
                                 .scrollIndicators(.hidden)
-                                .frame(height: 70)
+                                .frame(height: 80)
                                 
                                 Spacer()
                             }
@@ -128,24 +145,6 @@ struct MovieDetailView: View {
         .onAppear {
             viewModel.fetchMovieDetails(imdbID: movie.imdbID)
         }
-    }
-    
-    // Helper View to Display Ratings
-    func ratingView(name: String, score: String) -> some View {
-        VStack {
-            Text(name)
-                .font(.footnote)
-                .foregroundColor(.gray)
-            
-            Text(score)
-                .font(.title3.bold())
-                .foregroundColor(.blue)
-        }
-        .frame(width: 150, height: 60)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 2)
-        .padding(.horizontal, 5)
     }
 }
 

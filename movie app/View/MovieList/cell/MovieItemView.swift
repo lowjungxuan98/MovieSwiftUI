@@ -10,9 +10,11 @@ struct MovieItemView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: width)
+                    .frame(width: width, height: width * 1.5)
             } placeholder: {
                 ProgressView()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: width, height: width * 1.5)
             }
             
             LinearGradient(
@@ -23,8 +25,8 @@ struct MovieItemView: View {
                 startPoint: .bottom,
                 endPoint: .top
             )
-            .frame(width: width)
-            
+            .frame(width: width, height: width * 1.5)
+
             Text(movie.title)
                 .foregroundStyle(.white)
                 .font(.system(size: 15, weight: .bold))
@@ -32,7 +34,7 @@ struct MovieItemView: View {
                 .padding([.leading, .bottom], 10)
         }
         .cornerRadius(20)
-        .frame(width: width)
+        .frame(width: width, height: width * 1.5)
         .clipped()
     }
 }

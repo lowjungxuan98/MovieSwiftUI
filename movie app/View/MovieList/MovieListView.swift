@@ -37,7 +37,7 @@ struct MovieListView: View {
                     .stroke(Color.blue, lineWidth: 4)
             )
             .cornerRadius(textFieldHeight / 2)
-            
+            Spacer()
             if viewModel.isLoading {
                 ProgressView("Loading movies...")
             } else if let errorMessage = viewModel.errorMessage {
@@ -65,6 +65,7 @@ struct MovieListView: View {
                     viewModel.fetchMovies(searchQuery: searchText)
                 }
             }
+            Spacer()
         }
         .padding([.horizontal])
         .onAppear {

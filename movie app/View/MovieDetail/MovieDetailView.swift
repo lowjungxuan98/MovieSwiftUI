@@ -19,6 +19,9 @@ struct MovieDetailView: View {
                 ProgressView("Loading movie details...")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage).foregroundColor(.red)
+                PrimaryButton(title: "Back") {
+                    dismiss()
+                }
             } else if let movieDetail = viewModel.movieDetail {
                 GeometryReader { geometry in
                     ScrollView {

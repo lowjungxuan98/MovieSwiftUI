@@ -13,12 +13,22 @@ struct Movie: Decodable {
     let imdbID: String
     let type: String
     let poster: String
-
+    
     enum CodingKeys: String, CodingKey {
         case title = "Title"
         case year = "Year"
         case imdbID = "imdbID"
         case type = "Type"
         case poster = "Poster"
+    }
+}
+
+extension Movie {
+    init(entity: MovieEntity) {
+        self.title = entity.title
+        self.year = entity.year
+        self.imdbID = entity.imdbID
+        self.type = entity.type
+        self.poster = entity.poster
     }
 }

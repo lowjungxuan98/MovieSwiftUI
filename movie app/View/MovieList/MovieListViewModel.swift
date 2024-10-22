@@ -13,21 +13,20 @@ class MovieListViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @Published var selectedMovie: Movie?
-
-    private var cancellables = Set<AnyCancellable>()
-    private let movieService: MovieServiceProtocol
     
-    init(movieService: MovieServiceProtocol = MovieService()) {
-        self.movieService = movieService
+    private var cancellables = Set<AnyCancellable>()
+    private let repository: MovieRepositoryProtocol
+    
+    init(repository: MovieRepositoryProtocol = MovieRepository()) {
+        self.repository = repository
     }
     
     func fetchMovies(searchQuery: String) {
         isLoading = true
         errorMessage = nil
-        
-        movieService.fetchMovies(searchQuery: searchQuery)
+        repository.fetchMovies(searchQuery: searchQuery)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 self?.isLoading = false
                 switch completion {
                 case .failure(let error):
@@ -35,9 +34,9 @@ class MovieListViewModel: ObservableObject {
                 case .finished:
                     break
                 }
-            } receiveValue: { [weak self] movies in
-                self?.movies = movies
-            }
+            }, receiveValue: { movies in
+                self.movies = movies
+            })
             .store(in: &cancellables)
     }
 }

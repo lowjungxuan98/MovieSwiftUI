@@ -41,7 +41,6 @@ struct OnboardingView: View {
             })
             .padding(.horizontal)
             
-            
             Button(action: {
                 
             }) {

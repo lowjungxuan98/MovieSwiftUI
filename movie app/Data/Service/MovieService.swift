@@ -18,25 +18,25 @@ class MovieService: MovieServiceProtocol {
     private let baseURL = "http://www.omdbapi.com/"
 
     func fetchMovies(searchQuery: String) -> AnyPublisher<[Movie], Error> {
-        guard let url = URL(string: "\(baseURL)?apikey=\(apiKey)&s=\(searchQuery)&type=movie") else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
+          guard let url = URL(string: "\(baseURL)?apikey=\(apiKey)&s=\(searchQuery)&type=movie") else {
+              return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+          }
 
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: MovieList.self, decoder: JSONDecoder())
-            .map { $0.movies }
-            .eraseToAnyPublisher()
-    }
+          return URLSession.shared.dataTaskPublisher(for: url)
+              .map(\.data)
+              .decode(type: MovieList.self, decoder: JSONDecoder())
+              .map { $0.movies }
+              .eraseToAnyPublisher()
+      }
 
-    func fetchMovieDetail(imdbID: String) -> AnyPublisher<MovieDetail, Error> {
-        guard let url = URL(string: "\(baseURL)?apikey=\(apiKey)&i=\(imdbID)") else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
+      func fetchMovieDetail(imdbID: String) -> AnyPublisher<MovieDetail, Error> {
+          guard let url = URL(string: "\(baseURL)?apikey=\(apiKey)&i=\(imdbID)") else {
+              return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+          }
 
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: MovieDetail.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
-    }
+          return URLSession.shared.dataTaskPublisher(for: url)
+              .map(\.data)
+              .decode(type: MovieDetail.self, decoder: JSONDecoder())
+              .eraseToAnyPublisher()
+      }
 }

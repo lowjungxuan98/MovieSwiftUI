@@ -8,23 +8,14 @@
 import Foundation
 import Combine
 
-class MovieDetailViewModel: ObservableObject {
+class MovieDetailViewModel: BaseViewModel {
     @Published var movieDetail: MovieDetail?
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
-
-    private var cancellables = Set<AnyCancellable>()
-    private let movieService: MovieServiceProtocol
-
-    init(movieService: MovieServiceProtocol = MovieService()) {
-        self.movieService = movieService
-    }
     
     func fetchMovieDetails(imdbID: String) {
         isLoading = true
         errorMessage = nil
 
-        movieService.fetchMovieDetail(imdbID: imdbID)
+        repository.fetchMovieDetail(imdbID: imdbID)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 self?.isLoading = false
@@ -40,4 +31,3 @@ class MovieDetailViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 }
-

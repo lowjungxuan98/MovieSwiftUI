@@ -8,18 +8,9 @@
 import Foundation
 import Combine
 
-class MovieListViewModel: ObservableObject {
+class MovieListViewModel: BaseViewModel {
     @Published var movies: [Movie] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
     @Published var selectedMovie: Movie?
-    
-    private var cancellables = Set<AnyCancellable>()
-    private let repository: MovieRepositoryProtocol
-    
-    init(repository: MovieRepositoryProtocol = MovieRepository()) {
-        self.repository = repository
-    }
     
     func fetchMovies(searchQuery: String) {
         isLoading = true

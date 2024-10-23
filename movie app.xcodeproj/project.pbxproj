@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5414C7022CC8C47D007CB800 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5414C7012CC8C47D007CB800 /* FirebaseAuth */; };
+		5414C7042CC8C47D007CB800 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5414C7032CC8C47D007CB800 /* FirebaseFirestore */; };
+		5414C7062CC8C47D007CB800 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5414C7052CC8C47D007CB800 /* FirebaseStorage */; };
 		544073572CC825C2004094B8 /* NavigationStack in Frameworks */ = {isa = PBXBuildFile; productRef = 544073562CC825C2004094B8 /* NavigationStack */; };
 		544073662CC83096004094B8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 544073652CC83096004094B8 /* RealmSwift */; };
 		544073672CC8324B004094B8 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 544073652CC83096004094B8 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -47,16 +50,27 @@
 				5440736E2CC833A8004094B8 /* Kingfisher in Frameworks */,
 				544073662CC83096004094B8 /* RealmSwift in Frameworks */,
 				544073572CC825C2004094B8 /* NavigationStack in Frameworks */,
+				5414C7042CC8C47D007CB800 /* FirebaseFirestore in Frameworks */,
+				5414C7022CC8C47D007CB800 /* FirebaseAuth in Frameworks */,
+				5414C7062CC8C47D007CB800 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5414C7002CC8C47D007CB800 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		54B90A042CC796AA002D54D0 = {
 			isa = PBXGroup;
 			children = (
 				54B90A0F2CC796AA002D54D0 /* movie app */,
+				5414C7002CC8C47D007CB800 /* Frameworks */,
 				54B90A0E2CC796AA002D54D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +107,9 @@
 				544073562CC825C2004094B8 /* NavigationStack */,
 				544073652CC83096004094B8 /* RealmSwift */,
 				5440736D2CC833A8004094B8 /* Kingfisher */,
+				5414C7012CC8C47D007CB800 /* FirebaseAuth */,
+				5414C7032CC8C47D007CB800 /* FirebaseFirestore */,
+				5414C7052CC8C47D007CB800 /* FirebaseStorage */,
 			);
 			productName = "movie app";
 			productReference = 54B90A0D2CC796AA002D54D0 /* movie app.app */;
@@ -126,6 +143,7 @@
 				544073552CC825C2004094B8 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */,
 				544073642CC83096004094B8 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				5440736C2CC833A8004094B8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				543D37D22CC8C229006C48A3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 54B90A0E2CC796AA002D54D0 /* Products */;
@@ -361,6 +379,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		543D37D22CC8C229006C48A3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
 		544073552CC825C2004094B8 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/matteopuc/swiftui-navigation-stack.git";
@@ -388,6 +414,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5414C7012CC8C47D007CB800 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D37D22CC8C229006C48A3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		5414C7032CC8C47D007CB800 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D37D22CC8C229006C48A3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		5414C7052CC8C47D007CB800 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D37D22CC8C229006C48A3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		544073562CC825C2004094B8 /* NavigationStack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 544073552CC825C2004094B8 /* XCRemoteSwiftPackageReference "swiftui-navigation-stack" */;

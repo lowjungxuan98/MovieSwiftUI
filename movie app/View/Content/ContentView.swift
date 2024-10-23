@@ -12,7 +12,6 @@ import NavigationStack
 struct ContentView: View {
     @EnvironmentObject private var navigationStack: NavigationStackCompat
     @StateObject private var viewModel = ContentViewModel()
-    @State private var showBiometricPrompt = false
 
     var body: some View {
         NavigationStackView {

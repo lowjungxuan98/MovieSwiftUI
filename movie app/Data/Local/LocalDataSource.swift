@@ -77,5 +77,6 @@ class LocalDataSource: LocalDataSourceProtocol {
     func clearCurrentUser() {
         self.currentUser = nil
         userDefaults.removeObject(forKey: currentUserKey)
+        AuthenticationManager.shared.isRequired = false
     }
 }

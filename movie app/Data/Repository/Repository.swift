@@ -18,7 +18,7 @@ class Repository: RepositoryProtocol, ObservableObject {
     
     private let forcedUsername = "VVVBB"
     private let forcedPassword = "@bcd1234"
-    
+
     init(
         service: ServiceProtocol = Service(),
         localDataSource: LocalDataSourceProtocol = LocalDataSource(),
@@ -86,6 +86,7 @@ class Repository: RepositoryProtocol, ObservableObject {
         return service.logout()
             .handleEvents(receiveOutput: { [self] _ in
                 localDataSource.clearCurrentUser()
+                NotificationCenter.default.post(name: .userLoginStatusChanged, object: nil, userInfo: ["isLoggedIn": false])
             })
             .eraseToAnyPublisher()
     }

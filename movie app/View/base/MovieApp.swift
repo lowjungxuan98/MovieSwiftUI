@@ -11,21 +11,20 @@ import SwiftUI
 struct MovieApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @Environment(\.scenePhase) var scenePhase
+    @State var isBlur: Bool = false
 
-    var body: some Scene {
+    var body: some Scene {        
         WindowGroup {
             ContentView()
+                .blur(radius: isBlur ? 10 : 0)
+                .preferredColorScheme(.light)
         }
         .onChange(of: scenePhase) { oldScenePhase, newScenePhase in
-            switch newScenePhase {
-            case .active:
-                print("App is active")
-            case .inactive:
-                print("App is inactive")
-            case .background:
-                print("App is in background")
-            @unknown default:
-                print("Oh - interesting: I received an unexpected new value.")
+            if AuthenticationManager.shared.isRequired || isBlur {
+                AuthenticationManager.shared.authenticateUser { success in
+                    isBlur = !success
+                }
+                AuthenticationManager.shared.isRequired = false
             }
         }
     }

@@ -23,32 +23,36 @@ struct LoginView: View {
                     .foregroundColor(.blue)
             }
             .padding(.top)
-            
-            Text("Welcome back 👋")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.blue)
-                .multilineTextAlignment(.leading)
-                .padding(.top, 80)
-                .padding(.bottom, 8)
-            
-            Text("I am so happy to see you again. You can continue to login for more features.")
-                .font(.system(size: 16))
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.leading)
-                .padding(.bottom, 30)
-            
-            TextField("Email", text: $viewModel.username)
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
-            
-            SecureField("Password", text: $viewModel.password)
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .autocapitalization(.none)
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text("Welcome back 👋")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.blue)
+                        .multilineTextAlignment(.leading)
+                        .padding(.top, 80)
+                        .padding(.bottom, 8)
+                    
+                    Text("I am so happy to see you again. You can continue to login for more features.")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.bottom, 30)
+                    
+                    TextField("Email", text: $viewModel.username)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
+                    
+                    SecureField("Password", text: $viewModel.password)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                        .autocapitalization(.none)
+                }
+            }
+            .scrollIndicators(.hidden)
             
             Spacer()
             

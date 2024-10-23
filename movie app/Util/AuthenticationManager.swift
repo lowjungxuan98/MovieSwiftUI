@@ -10,30 +10,32 @@ import LocalAuthentication
 import Combine
 
 class AuthenticationManager: ObservableObject {
-    @Published var isAuthenticated = true
-    @Published var biometricEnabled = false // Track if the user has enabled biometrics
+    @Published var isRequired = false
+    let repository: RepositoryProtocol
 
-    func authenticateUser() {
-        let context = LAContext()
-        var error: NSError?
+    init(repository: RepositoryProtocol = Repository()) {
+        self.repository = repository
+    }
+    
+    static let shared = AuthenticationManager()
+    
+    func authenticateUser(completion: @escaping (Bool) -> Void) {
+        if repository.checkExistingUser() {
+            let context = LAContext()
+            var error: NSError?
 
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "Authenticate to access your movies"
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                let reason = "Authenticate to access your movies"
 
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
-                DispatchQueue.main.async {
-                    if success {
-                        self.isAuthenticated = true
-                    } else {
-                        self.isAuthenticated = false
-                        // Optionally, handle specific errors here
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+                    DispatchQueue.main.async {
+                        completion(success)
                     }
                 }
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.isAuthenticated = false
-                // Optionally, handle cases where authentication is not available
+            } else {
+                DispatchQueue.main.async {
+                    completion(false)
+                }
             }
         }
     }

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import RealmSwift
+import CryptoKit
 
 protocol LocalDataSourceProtocol {
     func saveMovies(_ movies: [Movie])
@@ -17,19 +18,26 @@ protocol LocalDataSourceProtocol {
     var currentUser: AppUser? { get }
 }
 
+
+
+// MARK: - LocalDataSource
 class LocalDataSource: LocalDataSourceProtocol {
     @Published var currentUser: AppUser?
     
     private let userDefaults = UserDefaults.standard
     private let currentUserKey = "currentUser"
-    
+    private let encryptionKey: SymmetricKey
+
     init() {
+        self.encryptionKey = SecureStorage.generateSymmetricKey()
         if let savedUserData = userDefaults.data(forKey: currentUserKey),
-           let savedUser = try? JSONDecoder().decode(AppUser.self, from: savedUserData) {
+           let decryptedUserData = try? SecureStorage.decryptData(savedUserData, usingKey: encryptionKey),
+           let savedUser = try? JSONDecoder().decode(AppUser.self, from: decryptedUserData) {
             self.currentUser = savedUser
         }
     }
-    
+
+    // MARK: - Save Movies to Realm
     func saveMovies(_ movies: [Movie]) {
         DispatchQueue(label: "RealmWriteQueue").async {
             autoreleasepool {
@@ -45,7 +53,8 @@ class LocalDataSource: LocalDataSourceProtocol {
             }
         }
     }
-    
+
+    // MARK: - Fetch Movies from Realm
     func fetchMovies(searchQuery: String) -> AnyPublisher<[Movie], Error> {
         Future<[Movie], Error> { promise in
             DispatchQueue(label: "RealmReadQueue").async {
@@ -66,14 +75,17 @@ class LocalDataSource: LocalDataSourceProtocol {
         }
         .eraseToAnyPublisher()
     }
-    
+
+    // MARK: - Save Current User (Encrypt and Store in UserDefaults)
     func saveCurrentUser(_ user: AppUser) {
         self.currentUser = user
-        if let userData = try? JSONEncoder().encode(user) {
-            userDefaults.set(userData, forKey: currentUserKey)
+        if let userData = try? JSONEncoder().encode(user),
+           let encryptedData = try? SecureStorage.encryptData(userData, usingKey: encryptionKey) {
+            userDefaults.set(encryptedData, forKey: currentUserKey)
         }
     }
-    
+
+    // MARK: - Clear Current User (Remove from UserDefaults)
     func clearCurrentUser() {
         self.currentUser = nil
         userDefaults.removeObject(forKey: currentUserKey)

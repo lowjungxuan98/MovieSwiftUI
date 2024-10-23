@@ -42,7 +42,7 @@ struct OnboardingView: View {
             .padding(.horizontal)
             
             Button(action: {
-                
+                navigationStack.push(SignUpView())
             }) {
                 Text("Sign Up")
                     .font(.system(size: 18, weight: .bold))

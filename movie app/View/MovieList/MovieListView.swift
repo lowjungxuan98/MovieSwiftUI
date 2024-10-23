@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MovieListView: View {
     @StateObject private var viewModel = MovieListViewModel()
-    @State private var searchText = "Marvel"
     @State private var showingSheet = false
     
     let textFieldHeight: CGFloat = 50
@@ -17,9 +16,9 @@ struct MovieListView: View {
         VStack {
             TextField(
                 "Search...",
-                text: $searchText,
+                text: $viewModel.searchText,
                 onCommit: {
-                    viewModel.fetchMovies(searchQuery: searchText)
+                    viewModel.fetchMovies()
                 }
             )
             .padding(.horizontal)
@@ -59,17 +58,20 @@ struct MovieListView: View {
                                 }
                         }
                     }
+                    PrimaryButton(title: "Log Out") {
+                        viewModel.logout()
+                    }
                 }
                 .scrollIndicators(.hidden)
                 .refreshable {
-                    viewModel.fetchMovies(searchQuery: searchText)
+                    viewModel.fetchMovies()
                 }
             }
             Spacer()
         }
         .padding([.horizontal])
         .onAppear {
-            viewModel.fetchMovies(searchQuery: searchText)
+            viewModel.onStart()
         }
         .fullScreenCover(isPresented: $showingSheet, content: {
             if let movie = viewModel.selectedMovie {

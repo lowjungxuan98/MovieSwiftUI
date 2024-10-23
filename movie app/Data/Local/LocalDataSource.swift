@@ -1,5 +1,5 @@
 //
-//  s.swift
+//  LocalDataSource.swift
 //  movie app
 //
 //  Created by Low Jung Xuan on 23/10/2024.
@@ -9,12 +9,27 @@ import Foundation
 import Combine
 import RealmSwift
 
-protocol MovieLocalDataSourceProtocol {
+protocol LocalDataSourceProtocol {
     func saveMovies(_ movies: [Movie])
     func fetchMovies(searchQuery: String) -> AnyPublisher<[Movie], Error>
+    func saveCurrentUser(_ user: AppUser)
+    func clearCurrentUser()
+    var currentUser: AppUser? { get }
 }
 
-class MovieLocalDataSource: MovieLocalDataSourceProtocol {
+class LocalDataSource: LocalDataSourceProtocol {
+    @Published var currentUser: AppUser?
+    
+    private let userDefaults = UserDefaults.standard
+    private let currentUserKey = "currentUser"
+    
+    init() {
+        if let savedUserData = userDefaults.data(forKey: currentUserKey),
+           let savedUser = try? JSONDecoder().decode(AppUser.self, from: savedUserData) {
+            self.currentUser = savedUser
+        }
+    }
+    
     func saveMovies(_ movies: [Movie]) {
         DispatchQueue(label: "RealmWriteQueue").async {
             autoreleasepool {
@@ -50,5 +65,17 @@ class MovieLocalDataSource: MovieLocalDataSourceProtocol {
             }
         }
         .eraseToAnyPublisher()
+    }
+    
+    func saveCurrentUser(_ user: AppUser) {
+        self.currentUser = user
+        if let userData = try? JSONEncoder().encode(user) {
+            userDefaults.set(userData, forKey: currentUserKey)
+        }
+    }
+    
+    func clearCurrentUser() {
+        self.currentUser = nil
+        userDefaults.removeObject(forKey: currentUserKey)
     }
 }

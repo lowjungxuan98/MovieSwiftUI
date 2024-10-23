@@ -11,11 +11,16 @@ import Combine
 class MovieListViewModel: BaseViewModel {
     @Published var movies: [Movie] = []
     @Published var selectedMovie: Movie?
+    @Published var searchText = "Marvel"
+
+    func onStart() {
+        fetchMovies()
+    }
     
-    func fetchMovies(searchQuery: String) {
+    func fetchMovies() {
         isLoading = true
         errorMessage = nil
-        repository.fetchMovies(searchQuery: searchQuery)
+        repository.fetchMovies(searchQuery: searchText)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 self?.isLoading = false
@@ -27,6 +32,24 @@ class MovieListViewModel: BaseViewModel {
                 }
             }, receiveValue: { movies in
                 self.movies = movies
+            })
+            .store(in: &cancellables)
+    }
+    
+    func logout() {
+        isLoading = true
+        errorMessage = nil
+        repository.logout()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.isLoading = false
+                switch completion {
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                case .finished:
+                    break
+                }
+            }, receiveValue: { _ in
             })
             .store(in: &cancellables)
     }

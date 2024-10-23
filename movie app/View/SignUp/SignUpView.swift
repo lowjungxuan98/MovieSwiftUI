@@ -41,16 +41,19 @@ struct SignUpView: View {
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
+                .keyboardType(.emailAddress)
 
             SecureField("Password", text: $viewModel.password)
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
+                .autocapitalization(.none)
 
             SecureField("Confirm Password", text: $viewModel.confirmPassword)
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
+                .autocapitalization(.none)
 
             Spacer()
 

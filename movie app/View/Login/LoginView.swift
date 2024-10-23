@@ -41,12 +41,14 @@ struct LoginView: View {
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
+                .keyboardType(.emailAddress)
+                .autocapitalization(.none)
             
             SecureField("Password", text: $viewModel.password)
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
-            
+                .autocapitalization(.none)
             
             Spacer()
             

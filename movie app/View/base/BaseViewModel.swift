@@ -13,9 +13,9 @@ class BaseViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     var cancellables = Set<AnyCancellable>()
-    let repository: AppRepositoryProtocol
+    let repository: RepositoryProtocol
 
-    init(repository: AppRepositoryProtocol = AppRepository()) {
+    init(repository: RepositoryProtocol = Repository()) {
         self.repository = repository
     }
 }
